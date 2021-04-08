@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sync-target-deployment
+  labels:
+    app: testing
+    memcached-operator/associated-memcached-deployment-name: memcached-sample
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: testing
+  template:
+    metadata:
+      labels:
+        app: testing
+    spec:
+      containers:
+      - name: infinity
+        image: registry.access.redhat.com/ubi8/ubi-minimal
+        command: ["/bin/bash", "-c", "sleep infinity"]

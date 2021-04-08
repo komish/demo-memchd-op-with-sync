@@ -101,6 +101,14 @@ func (r *DeploymentSyncReconciler) Reconcile(ctx context.Context, req ctrl.Reque
 		return ctrl.Result{}, nil
 	}
 
+	log.Info(
+		"Replica count on deployment has changed. Syncing memcached",
+		"memcached-identifier",
+		memcachedKey.String(),
+		"from", memcached.Spec.Size,
+		"to", deploymentReplicas,
+	)
+
 	toPatch := client.MergeFrom(memcached.DeepCopy())
 	memcached.Spec.Size = deploymentReplicas
 
