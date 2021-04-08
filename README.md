@@ -82,3 +82,21 @@ NAME                     READY   UP-TO-DATE   AVAILABLE   AGE
 memcached-sample         2/2     2            2           4m30s
 sync-target-deployment   2/2     2            2           4m
 ```
+
+## Challenges
+
+- In this particular implementation, you would have an issue if a user then went
+  and scaled the `Memcached` instance manually. You would solve need to either
+  perform a periodic sync, or find some way to more-closely couple the Memcached
+  instance to the deployment.
+
+- In this particular implementation, you would have an issue if multiple
+  deployments indicated the same `Memcached` instance needed to be synced
+  according to its replicas. The controller has no way of determining which one
+  should win, and therefore the controller would constantly be adjusting the
+  `Memcached` resource.
+
+Ideally, you would want to have a closer binding between the Memcached instance
+and the external deployment - either via some kind of reference in the
+`Memcached` spec, some additional API, or some configuration that allows you to
+look up the relationship between the two.
