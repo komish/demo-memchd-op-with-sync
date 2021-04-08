@@ -5,6 +5,9 @@ Operator example with an additional controller that synchronizes the size of the
 memcached installation based on a Deployment's replica within the same
 namespace.
 
+The new code is at
+[controllers/deployments_sync_controller.go](controllers/deployments_sync_controller.go).
+
 ## Additional Controller Implementation
 
 The additional controller watches `appv1.Deployment` resources. When a
